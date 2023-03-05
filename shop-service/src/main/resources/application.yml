@@ -1,0 +1,37 @@
+server:
+  port: 0 # случайный свободный порт
+
+logging:
+  level:
+    root: DEBUG
+#    org.springframework.web: INFO
+#    org.springframework.security: INFO
+#    org.springframework.security.oauth2: INFO
+#    org.springframework.boot.autoconfigure: DEBUG
+
+spring:
+  # Security (jwt) properties
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9000
+
+  application:
+    name: shop-service # имя сервиса для eureka
+
+  # Kafka properties
+  kafka:
+    bootstrap-servers: http://localhost:9092
+    template:
+      default-topic: shopTopic
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties.spring.json.type.mapping: event:ru.otus.common.event.ShopEvent
+
+# Eureka properties
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:password@localhost:8761/eureka # для регистрации в eureka

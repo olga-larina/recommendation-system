@@ -1,0 +1,41 @@
+server:
+  port: 65432
+
+logging:
+  level:
+    root: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+
+spring:
+  thymeleaf:
+    cache: false
+
+  # Security (jwt) properties for oauth2 client
+  security:
+    oauth2:
+      client:
+        registration:
+          recommendation-client:
+            provider: spring
+            client-id: recommendation
+            client-secret: secret
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://127.0.0.1:65432/login/oauth2/code/{registrationId}" # по умолчанию в OAuth2LoginConfigurer.RedirectionEndpointConfig
+            scope: openid
+            client-name: recommendation-client
+        provider:
+          spring:
+            issuer-uri: http://localhost:9000
+
+# Application properties
+otus:
+  client:
+    api:
+      recommendation_uri: http://localhost:8080/api/recommendation
+      shop_uri: http://localhost:8080/api/shop
+      product_uri: http://localhost:8080/api/product
+    app:
+      login_page: /oauth2/authorization/recommendation-client
+      default_oauth2_registration: recommendation-client

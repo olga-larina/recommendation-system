@@ -1,0 +1,56 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway.route.RouteDefinitionLocator: INFO
+    org.springframework.cloud.gateway.route: TRACE
+
+spring:
+
+  application:
+    name: api-gateway # имя сервиса для eureka
+
+  # Routing
+  cloud:
+    gateway:
+      routes:
+      - id: discovery-server
+        uri: http://localhost:8761
+        predicates:
+        - Path=/eureka/web
+        filters:
+        - SetPath=/
+
+      - id: discovery-server-static
+        uri: http://localhost:8761
+        predicates:
+        - Path=/eureka/**
+
+      - id: shop-service
+        uri: lb://shop-service
+        predicates:
+        - Path=/api/shop/**
+        filters:
+        - RewritePath=/api/(?<remaining>.*), /$\{remaining}
+
+      - id: recommendation-service
+        uri: lb://recommendation-service
+        predicates:
+        - Path=/api/recommendation/**
+        filters:
+        - RewritePath=/api/(?<remaining>.*), /$\{remaining}
+
+      - id: product-service
+        uri: lb://product-service
+        predicates:
+        - Path=/api/product/**
+        filters:
+        - RewritePath=/api/(?<remaining>.*), /$\{remaining}
+
+# Eureka properties
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:password@localhost:8761/eureka # для регистрации в eureka

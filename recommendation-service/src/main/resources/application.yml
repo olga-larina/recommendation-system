@@ -1,0 +1,65 @@
+server:
+  port: 0 # случайный свободный порт
+
+logging:
+  level:
+    root: DEBUG
+#    org.springframework.web: INFO
+#    org.springframework.security: INFO
+#    org.springframework.security.oauth2: INFO
+#    org.springframework.boot.autoconfigure: DEBUG
+    org.apache.kafka: INFO
+    ac.simons.neo4j.migrations.core.Migrations.Startup: TRACE
+
+spring:
+  # Security (jwt) properties
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9000
+
+  application:
+    name: recommendation-service # имя сервиса для eureka
+
+  # Kafka properties
+  kafka:
+    bootstrap-servers: http://localhost:9092
+    template:
+      default-topic: shopTopic
+    consumer:
+      group-id: shopEventId
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties.spring.json.type.mapping: event:ru.otus.common.event.ShopEvent
+
+  # Neo4j properties
+  neo4j:
+    uri: bolt://localhost:7687
+    authentication:
+      username: neo4j
+      password: test12345
+
+# Neo4j properties (migration)
+org:
+  neo4j:
+    migrations:
+      enabled: true
+
+# Eureka properties
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:password@localhost:8761/eureka # для регистрации в eureka
+
+# Application properties
+otus:
+  recommendation:
+    api:
+      product_uri: lb://product-service/product
+    app:
+      min_score_for_product: 50 # минимальный балл связи клиент - продукт, при достижении которого данный клиент включается в поиск рекомендаций
+      min_score_for_other_products: 50 # минимальный балл связи клиент - продукт, при достижении которого продукты включаются в список рекомендаций
+      view_score: 10 # балл за просмотр
+      favorites_score: 50 # балл за избранное
+      cart_score: 100 # балл за корзину

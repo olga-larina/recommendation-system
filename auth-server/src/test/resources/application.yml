@@ -1,0 +1,26 @@
+spring:
+  # DB properties
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: password
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: false
+  liquibase:
+    enabled: true
+    change-log: /db/changelog/db.changelog.test.yaml # чтобы перезаписать тестовые данные
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+# Eureka properties
+eureka:
+  client:
+    enabled: false

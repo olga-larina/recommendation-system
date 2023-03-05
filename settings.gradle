@@ -1,0 +1,10 @@
+rootProject.name = 'recommendation-system'
+include 'auth-server'
+include 'discovery-server'
+include 'api-gateway'
+include 'recommendation-service'
+include 'product-service'
+include 'shop-service'
+include 'client-service'
+include 'common'
+

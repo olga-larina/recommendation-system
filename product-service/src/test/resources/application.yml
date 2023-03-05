@@ -1,0 +1,13 @@
+# Eureka properties
+eureka:
+  client:
+    enabled: false
+
+mongock:
+  runner-type: "ApplicationRunner"
+  change-logs-scan-package:
+    - ru.otus.product.mongock.changelog
+  mongo-db:
+    write-concern:
+      journal: false
+    read-concern: local
