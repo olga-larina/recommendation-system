@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recommendation system</title>
+    <script defer th:src="@{/js/recommendation.js}"></script>
+    <link rel="shortcut icon" href="#">
+    <style type="text/css">
+        .table-fix-head { overflow: auto; height: 200px; }
+        .table-fix-head thead th { position: sticky; top: 0; z-index: 1; }
+
+        .tab-data {
+            border: 1px solid darkorchid;
+            width: 1000px;
+            border-collapse: separate;
+        }
+
+        .tab-data tr td, th {
+            padding: 1px;
+            border: 1px solid darkorchid;
+        }
+
+        .button {
+            line-height: 2.5;
+            padding: 0 20px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+
+        input:read-only {
+            background: lightgray;
+        }
+
+        .row {
+            margin-top: 10px;
+        }
+
+        .block_container {
+            display: flex;
+            justify-content: left;
+        }
+
+    </style>
+</head>
+<body>
+<div class="block_container">
+    <div>
+        <h3>Products</h3>
+        <div class="table-fix-head">
+            <table class="tab-data" id="tab-products-data">
+                <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Title</th>
+                    <th>Manufacturer</th>
+                    <th>Category</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <button id="btn-get-all-products" class="button">Get all</button>
+    </div>
+</div>
+<br/>
+<div class="block_container">
+    <div>
+        <h3>Recommendations</h3>
+        <p>Product code: <input id="product-code-for-recommendations-input" type="text" name="product-code-for-recommendations-input" readonly="readonly" size="50" /> </p>
+        <p>Client id: <input id="client-id-for-recommendations-input" type="text" name="client-id-for-recommendations-input" readonly="readonly" size="50" /> </p>
+        <br/>
+        <div class="table-fix-head">
+            <table class="tab-data" id="tab-recommendations-data">
+                <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Title</th>
+                    <th>Manufacturer</th>
+                    <th>Category</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

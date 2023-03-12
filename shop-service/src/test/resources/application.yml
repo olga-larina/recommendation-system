@@ -1,0 +1,17 @@
+logging:
+  level:
+    root: DEBUG
+    org.apache.kafka: TRACE
+
+spring:
+  # Kafka properties
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties.spring.json.type.mapping: event:ru.otus.common.event.ShopEvent
+
+# Eureka properties
+eureka:
+  client:
+    enabled: false

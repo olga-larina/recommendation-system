@@ -1,0 +1,43 @@
+server:
+  port: 9000
+
+logging:
+  level:
+    root: DEBUG
+#    org.springframework.web: INFO
+#    org.springframework.security: INFO
+#    org.springframework.security.oauth2: TRACE
+#    org.springframework.boot.autoconfigure: DEBUG
+
+spring:
+
+  # DB properties
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: password
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+  liquibase:
+    enabled: true
+    change-log: /db/changelog/db.changelog.yaml
+
+  application:
+    name: auth-server # имя сервиса для eureka
+
+# Eureka properties
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:password@localhost:8761/eureka # для регистрации в eureka
+
+# Application properties
+otus:
+  auth:
+    issuer: http://localhost:9000
+    client_id: recommendation
+    client_secret: $2a$12$8IpujsoQ4KelCV.0PQm7lu9IGoHxdp2PRodA6w05Q.MIyeXokPi7i # secret
+    redirect_uri:
+      - http://127.0.0.1:65432/login/oauth2/code/recommendation-client
